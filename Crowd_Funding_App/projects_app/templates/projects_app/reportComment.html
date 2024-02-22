@@ -1,0 +1,22 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  <div class="container mt-5">
+    <div class="p-2 gap-2" style="border: 2px solid gray;border-radius: 10px;">
+      <div class="border m-2 p-2">
+        <div class="d-flex align-items-center mb-2 rounded" style="gap: 10px;background: lightgray;">
+          <img width="48" height="48" class="align-middle" src="/media/default.png" />
+          {{ comment.user }}
+        </div>
+        <p class="d-flex">{{ comment.commentContent }}</p>
+        <p class="d-flex">{{ comment.commentDate }}</p>
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="userComment" placeholder="Add Report Comment" aria-describedby="button-addon2" />
+          <button class="btn btn-primary" type="submit" id="button-addon2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

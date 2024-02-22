@@ -202,10 +202,17 @@ def projectProfile(request):
     return render(request, "registration/projectProfile.html", context)
 
 
+
 # Show / Update Donations Profile
 @login_required
 def donationsProfile(request):
-    return render(request, "registration/donationsProfile.html")
+    donations = Donation.objects.filter(user=request.user)
+    allData = []
+    for donation in donations:
+        images = Image.objects.filter(project=donation.project)
+        allData.append({"project": donation.project, "images": images,"donation":donation})
+    context = {"allData": allData}
+    return render(request, "registration/donationsProfile.html",context)
 
 
 # Delete Account

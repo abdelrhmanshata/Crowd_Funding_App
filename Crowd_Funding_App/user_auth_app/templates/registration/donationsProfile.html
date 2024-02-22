@@ -1,3 +1,37 @@
 {% extends 'registration/profile.html' %}
+{% load crispy_forms_tags %}
 {% block section %}
+  <div>
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'personalProfile' %}">Personal Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'projectProfile' %}">Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'donationsProfile' %}">Donations</a>
+      </li>
+    </ul>
+    <br />
+    <hr>
+    <div class="d-flex flex-wrap gap-2">
+      {% for item in allData %}
+          <div class="card p-2 m-2" style="width: 250px;">
+            <img src="{{ item.images.0.getImageUrl }}" class="card-img-top" width="50" height="200" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Title : {{ item.project.title }}</h5>
+              <h5 class="card-title">Donation : {{ item.donation.donationAmount }}</h5>
+              <div class="d-flex btn btn-primary justify-content-center" >
+                <a href="{% url 'projectDetails' item.project.id %}" class="btn-primary text-center">Show</a>
+               </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="carousel-item active">
+          <h5 class="text-dark text-center">No Project Found</h5>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

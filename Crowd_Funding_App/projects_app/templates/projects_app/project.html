@@ -12,7 +12,14 @@
           <p class="card-text">{{item.project.details}}</p>
          
           <a href="{% url 'projectDetails' item.project.id %}" class="btn btn-primary btn-md">Read more</a>
-          
+          {% if user.is_superuser %}
+            {% if item.project.featured %}
+                <a href="{% url 'projectFeatured' item.project.id %}" class="btn btn-danger btn-md">UnFeatured</a>
+            {% else %}
+                <a href="{% url 'projectFeatured' item.project.id %}" class="btn btn-success btn-md">Featured</a>
+            {% endif %} 
+          {% endif %}
+         
         </div>
       </div>
     </div>

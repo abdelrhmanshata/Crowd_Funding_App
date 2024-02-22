@@ -29,6 +29,32 @@ class Image(models.Model):
     def getImageUrl(self):
         return f"/media/{self.image}"
 
+class Comment(models.Model):
+    project = models.ForeignKey(Projects, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    commentContent = models.CharField(default="")
+    commentDate = models.DateField(default=timezone.now)
+    numCommentReport = models.IntegerField(default=0)
+
+class ProjectReport(models.Model):
+    project = models.ForeignKey(Projects, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+
+class CommentReport(models.Model):
+    comment = models.ForeignKey(Comment, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    reportContent = models.CharField(default="")
+
+class Donation(models.Model):
+    project = models.ForeignKey(Projects, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    donationAmount = models.FloatField(default=0.0)
+
+class Rating(models.Model):
+    project = models.ForeignKey(Projects, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    ratingValue = models.IntegerField(default=0)
+
 class Tag(models.Model):
     project = models.ForeignKey(Projects, default=None, on_delete=models.CASCADE)
     tagContent = models.CharField(default="")

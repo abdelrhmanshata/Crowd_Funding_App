@@ -61,8 +61,15 @@
         <th scope="row">End Time</th>
         <td colspan="5">{{project.end_time}}</td>
       </tr>
+      <tr>
+        <th scope="row">Rating</th>
+        <td colspan="5">{{rating}} <img width="24" height="24" class="align-middle " src="/media/star.png">   </td>
+      </tr>
     </tbody>
   </table>
+
+
+
 </div>
 <hr/><hr/>
 <h3>Tags</h3>
@@ -77,6 +84,89 @@
 </div>
 <hr/>
 <hr/>
+<div class="d-flex flex-wrap gap-2">
+  {% for project in basedProjects %}
+      <div class="card p-2 m-2 bg-info" style="width: 250px;">
+        <div class="card-body">
+          <h5 class="card-title text-light">{{ project.title }}</h5>
+          <p class="card-text text-light">{{ project.tags }}</p>       
+          <a href="{% url 'projectDetails' project.id %}" class="btn btn-light">Show</a>
+          </div>
+    </div>
+    {% empty %}
+    <div class="carousel-item active">
+      <h5 class="text-dark text-center">No Base Project Found</h5>
+    </div>
+  {% endfor %}
+</div>
+
+<hr/>
+<hr/>
+{% if user.is_authenticated %}
+<h3>Donation</h3>
+<div class="p-2" style="border: 2px solid gray;border-radius: 10px;">
+  {% if isProjectActive %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: flex;flex-direction: column;">{{ donationForm|crispy }}</div>
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <button class="btn btn-primary w-25" type="submit" id="inputGroupFileAddon04">Donation</button>
+    </div>
+  </form>
+  {% else %}
+  <h5>Donation Is Not Available</h5>
+  {% endif %}
+</div>
+
+<hr/><hr/>
+<h3>Reviews</h3>
+<div class="p-2" style="border: 2px solid gray;border-radius: 10px;">
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: flex;flex-direction: column;">{{ ratingForm|crispy }}</div>
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <button class="btn btn-primary w-25" type="submit" id="inputGroupFileAddon04">Add Rating</button>
+    </div>
+  </form>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="display: flex;flex-direction: column;">{{ commentForm|crispy }}</div>
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <button class="btn btn-primary w-25" type="submit" id="inputGroupFileAddon04">Add Comment</button>
+    </div>
+  </form>
+  <hr>
+  <div class="text-center">
+    <a class="btn btn-outline-danger m-2"  href="{% url 'reportProject' project.id %}" >Report this Project</a>
+  </div>
+</div>
+
+<hr/><hr/>
+<h3>Comments</h3>
+<div class="p-2 gap-2" style="border: 2px solid gray;border-radius: 10px;">
+  {% for item in allComments %}
+  <div class="border m-2 p-2">
+      <div class="d-flex align-items-center mb-2 rounded" style="gap: 10px;background: {% if item.commentReportsNum %}red;{% else %}lightgray;{% endif %}"> 
+        <img width="48" height="48" class="align-middle " src="/media/default.png">
+        {{item.comment.user}} 
+        <p style="color: lightgray;">Report </p>
+      </div>
+      <p class="d-flex"> {{item.comment.commentContent}} </p>
+      <p class="d-flex"> {{item.comment.commentDate}} </p>
+      <a href="{% url 'reportComments' item.comment.id %}" >Report this comment.</a>
+  </div>
+  {% empty %}
+  <div class="carousel-item active ">
+    <h5 class="text-dark text-center">No Comments Found</h5>
+  </div>
+{% endfor %}  
+</div>
+{% endif %}
+
+
+
 
 
 {% endblock %}
