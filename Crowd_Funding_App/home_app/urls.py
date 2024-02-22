@@ -7,4 +7,5 @@ urlpatterns = [
     path(
         "category/<int:category_id>", views.get_category_projects, name="get_category"
     ),
+    path("search/", views.search_results, name="search_results"),
 ]

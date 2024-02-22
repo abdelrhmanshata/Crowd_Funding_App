@@ -7,7 +7,10 @@
       <div class="card "> 
   
         <div class="d-flex flex-grow-1 w-100 p-2 gap-2 border" id="search-bar">
-        
+          <form class="d-flex flex-grow-1 gap-2" method="GET" action="{% url 'search_results' %}">
+            <input class="form-control flex-grow-1" type="search" name="q" placeholder="Search" aria-label="Search" />
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
             <div class="dropdown btn btn-outline-secondary">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -19,7 +22,42 @@
           </div>
         </div>
   <br>
-   
+  <h2 class="text-danger up mb-4 text-center">
+    Highest five rated Projects
+  </h2>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      {% for itemChunk in chunks %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="cards-wrapper d-flex justify-content-center">
+            {% for item in itemChunk %}
+              <div class="card" id="carousal-card">
+                <img src="{{item.images.0.getImageUrl}}" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.project.title }}</h5>
+                  <p class="card-text">{{ item.project.details }}</p>
+                  <a href="{% url 'projectDetails' item.project.id %}" class="btn btn-primary">Show</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% empty %}
+        <div class="carousel-item active ">
+          <h5 class="text-dark text-center">No Projects Found</h5>
+        </div>
+      {% endfor %}
+    </div>
+          <a class="carousel-control-prev bg-dark" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next bg-dark" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      <hr>
         <div class="card-body">
           <h3 class="text-center mb-4 text-danger">Last 5 Projects</h3> 
           <div id="projectCarousel" class="carousel slide" data-ride="carousel">

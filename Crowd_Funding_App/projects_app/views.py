@@ -199,3 +199,9 @@ def calculateRatings(project):
             totalRating += rating.ratingValue
         return totalRating / len(ratings)
     return 0
+
+def projectFeatured(request, id):
+    project = Projects.objects.get(id=id)
+    project.featured = not project.featured
+    project.save()
+    return redirect("showAllProjects")

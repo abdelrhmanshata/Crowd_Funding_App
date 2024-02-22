@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Search Results</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        {% for item in all_Projects_Data %}
+            <div class="col mb-4">
+                <div class="border  card h-100 text-center p-2">
+                    <img src="{{item.images.0.getImageUrl}}" class="card-img-top" alt="{{ result.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.project.title }}</h5>
+                        <p class="card-text">{{ item.project.tags }}</p>
+                        <a href="{% url 'projectDetails' item.project.id %}" class="btn btn-primary">Show</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <p class="text-muted">No results found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
