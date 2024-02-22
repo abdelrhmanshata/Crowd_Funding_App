@@ -30,6 +30,8 @@ urlpatterns = [
     path("user/", include("user_auth_app.urls")),
     path("accounts/login/", CustomLoginView.as_view(),name="login"),    
     path("admin/", admin.site.urls),
+    path("adminUser/", include("admin_app.urls")),
+    path("project/", include("projects_app.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
 if settings.DEBUG:

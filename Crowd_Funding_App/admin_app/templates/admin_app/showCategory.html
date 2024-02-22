@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <div class="contents">
+    <h1><span>Add Category</span></h1>
+    <div class="container" style=" margin-right: 340px; margin-top: 25px;">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="input-group">
+          <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04">Save Category</button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <hr>
+    <div class="contents">
+      <h1><span>Show Categories</span></h1>
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col">Category Name</th>
+            <th scope="col" class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for category in categories %}
+            <tr>
+              <th scope="row" class="text-center">{{ category.id }}</th>
+              <th style="width: 80%;">{{ category.name }}</th>
+              <td class="text-center">
+                <a class="btn btn-primary" href="{% url 'updateCategory' category.id %}">Update</a>
+                <a class="btn btn-outline-danger" href="{% url 'deleteCategory' category.id %}">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

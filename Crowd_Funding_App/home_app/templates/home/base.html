@@ -26,15 +26,15 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="">All Projects</a>
+              <a class="nav-item nav-link" href="{% url 'showAllProjects' %}">All Projects</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
                 {% if user.is_superuser %}
-                  <a class="nav-item nav-link" href="">Category</a>
+                <a class="nav-item nav-link" href="{% url 'category' %}">Category</a>
                 {% else %}
-                  <a class="nav-item nav-link" href="">Add Project</a>
+                  <a class="nav-item nav-link" href="{% url 'addProject' %}">Add Project</a>
                 {% endif %}
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">

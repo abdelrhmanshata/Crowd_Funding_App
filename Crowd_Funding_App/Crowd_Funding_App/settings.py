@@ -42,8 +42,11 @@ INSTALLED_APPS = [
     "bootstrap5",
     "crispy_forms",
     #
+    "admin_app.apps.AdminAppConfig",
     "user_auth_app.apps.UserAuthAppConfig",
     "home_app.apps.HomeAppConfig",
+    "projects_app.apps.ProjectsAppConfig",
+
 ]
 
 MIDDLEWARE = [
@@ -88,7 +91,7 @@ DATABASES = {
         "Host": "localhost",
         "PORT": "5432",
         "USER": "postgres",
-        "PASSWORD": "120699",
+        "PASSWORD": "19991999",
     }
 }
 

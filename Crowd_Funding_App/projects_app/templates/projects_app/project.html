@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<div class="row">
+    {% for item in allData %}
+    <div class="col mb-4">
+      <div class="card p-3" style="width: 300px;">
+        <div class="view overlay">
+          <img class="card-img-top" src="{{item.images.0.getImageUrl}}" alt="">
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">{{item.project.title}}</h4>
+          <p class="card-text">{{item.project.details}}</p>
+         
+          <a href="{% url 'projectDetails' item.project.id %}" class="btn btn-primary btn-md">Read more</a>
+          
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="carousel-item active ">
+      <h5 class="text-dark text-center">No Projects Found</h5>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

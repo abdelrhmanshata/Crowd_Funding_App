@@ -12,7 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from .models import Profile
-
+from projects_app.models import *
 
 # Login User
 class CustomLoginView(LoginView):
@@ -187,10 +187,19 @@ def personalProfile(request):
     return render(request, "registration/personalProfile.html", context)
 
 
+
+
 # Show / Update Project Profile
 @login_required
 def projectProfile(request):
-    return render(request, "registration/projectProfile.html")
+    projects = Projects.objects.filter(user=request.user)
+    allData = []
+    for project in projects:
+        images = Image.objects.filter(project=project)
+        allData.append({"project": project, "images": images})
+
+    context = {"allData": allData}
+    return render(request, "registration/projectProfile.html", context)
 
 
 # Show / Update Donations Profile
