@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+  <h1>{{ category.name }}</h1>
+  <div class="row">
+    {% for item in all_Projects_Data %}
+      <div class="col mb-4">
+        <div class="card" style="width:300px">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.project.title }}</h5>
+            <p class="card-text">Details: {{ item.project.details }}</p>
+            
+            <img src="{{ item.images.0.getImageUrl }}" class="card-img-top" />
+            
+            <a href="{% url 'projectDetails' item.project.id %}" class="btn btn-primary">View More</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="carousel-item active ">
+        <h5 class="text-dark text-center">No projects found for this category.</h5>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
